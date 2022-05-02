@@ -1,0 +1,4 @@
+services:
+  Shared.Config:
+    class: ../../config/Config
+    arguments: []
