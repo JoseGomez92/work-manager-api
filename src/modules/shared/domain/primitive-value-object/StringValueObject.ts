@@ -14,6 +14,6 @@ export default abstract class StringValueObject {
     }
 
     static areAllSpaces(value: string): boolean {
-        return /\s/g.test(value)
+        return value.trim().length === 0
     }
 }
