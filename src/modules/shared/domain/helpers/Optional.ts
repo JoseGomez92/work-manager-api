@@ -6,6 +6,6 @@ export default class Optional<T> {
     }
 
     isEmpty(): boolean {
-        return !!this.value
+        return !this.value
     }
 }
