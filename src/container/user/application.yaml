@@ -1,0 +1,20 @@
+services:
+  User.SaveUserPutController:
+    class: ../../api/controller/user/SaveUserPutController
+    arguments: ['@User.Save']
+
+  User.UpdateUserPostController:
+    class: ../../api/controller/user/UpdateUserPostController
+    arguments: ['@User.UpdateUser']
+
+  User.Save:
+    class: ../../modules/user/application/SaveUser
+    arguments: ['@User.Repository']
+
+  User.UpdateUser:
+    class: ../../modules/user/application/UpdateUser
+    arguments: ['@User.Repository']
+
+  User.Repository:
+    class: ../../modules/user/infraestructure/InMemoryRepository/InMemoryUserRepository
+    arguments: []

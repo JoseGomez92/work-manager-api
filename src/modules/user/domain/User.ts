@@ -19,24 +19,24 @@ export type UserType = {
 }
 
 export default class User extends AggregateRoot<UserType> {
-    private readonly id: UserId
-    private readonly name: UserName
-    private readonly surnames: UserSurnames
-    private readonly email: UserEmail
-    private readonly phone: UserPhone
-    private readonly address: UserAddress
-    private readonly password: UserPassword
+    private readonly _id: UserId
+    private _name: UserName
+    private _surnames: UserSurnames
+    private _email: UserEmail
+    private _phone: UserPhone
+    private _address: UserAddress
+    private _password: UserPassword
 
     private constructor(params: UserType) {
         super()
         this.guardType(params)
-        this.id = new UserId(params.id)
-        this.name = new UserName(params.name)
-        this.surnames = new UserSurnames(params.surnames)
-        this.email = new UserEmail(params.email)
-        this.phone = new UserPhone(params.phone)
-        this.address = new UserAddress(params.address)
-        this.password = new UserPassword(params.password)
+        this._id = new UserId(params.id)
+        this._name = new UserName(params.name)
+        this._surnames = new UserSurnames(params.surnames)
+        this._email = new UserEmail(params.email)
+        this._phone = new UserPhone(params.phone)
+        this._address = new UserAddress(params.address)
+        this._password = new UserPassword(params.password)
     }
 
     protected guardType(value: UserType): void {
@@ -53,15 +53,67 @@ export default class User extends AggregateRoot<UserType> {
         return new User(params)
     }
 
+    get id() {
+        return this._id.value
+    }
+
+    get name() {
+        return this._name.value
+    }
+
+    get surnames() {
+        return this._surnames.value
+    }
+
+    get email() {
+        return this._email.value
+    }
+
+    get phone() {
+        return this._phone.value
+    }
+
+    get address() {
+        return this._address.value
+    }
+
+    get password() {
+        return this._password.value
+    }
+
+    set name(value: string) {
+        this._name = new UserName(value)
+    }
+
+    set surnames(value: string) {
+        this._surnames = new UserSurnames(value)
+    }
+
+    set email(value: string) {
+        this._email = new UserEmail(value)
+    }
+
+    set phone(value: string) {
+        this._phone = new UserPhone(value)
+    }
+
+    set address(value: string) {
+        this._address = new UserAddress(value)
+    }
+
+    set password(value: string) {
+        this._password = new UserPassword(value)
+    }
+
     toPrimitives(): UserType {
         return {
-            id: this.id.value,
-            name: this.name.value,
-            surnames: this.surnames.value,
-            email: this.email.value,
-            phone: this.phone.value,
-            address: this.address.value,
-            password: this.password.value,
+            id: this._id.value,
+            name: this._name.value,
+            surnames: this._surnames.value,
+            email: this._email.value,
+            phone: this._phone.value,
+            address: this._address.value,
+            password: this._password.value,
         }
     }
 }

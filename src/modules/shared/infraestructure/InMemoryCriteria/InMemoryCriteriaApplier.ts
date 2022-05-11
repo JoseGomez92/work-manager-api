@@ -9,6 +9,7 @@ import InMemoryComparation from './operators/InMemoryComparation'
 import InMemoryIn from './operators/InMemoryIn'
 import InMemoryLike from './operators/InMemoryLike'
 
+// TODO: Check all use cases
 export default class InMemoryCriteriaApplier<Z, T extends AggregateRoot<Z>> {
     constructor(private aggregates: Array<T>, private criteria: Criteria) {}
 
