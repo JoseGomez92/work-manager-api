@@ -6,7 +6,7 @@ import User, { UserType } from '../domain/User'
 import UserRepository from '../domain/UserRepository'
 
 export default class SaveUser {
-    constructor(private repository: UserRepository) {}
+    constructor(private repository: UserRepository, private bcrypt: Bcrypt) {}
 
     async run(rawUser: UserType): Promise<void> {
         await this.guardUserById(rawUser.id)
@@ -28,6 +28,6 @@ export default class SaveUser {
     }
 
     private encryptPassword(password: string): Promise<string> {
-        return Bcrypt.generateHash(password)
+        return this.bcrypt.generateHash(password)
     }
 }

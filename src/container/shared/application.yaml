@@ -2,3 +2,11 @@ services:
   Shared.Config:
     class: ../../config/Config
     arguments: []
+
+  Shared.Helpers.Bcrypt:
+    class: ../../modules/shared/domain/helpers/Bcrypt
+    arguments: []
+
+  Shared.Helpers.Jwt:
+    class: ../../modules/shared/domain/helpers/JWT
+    arguments: ['@Shared.Config']

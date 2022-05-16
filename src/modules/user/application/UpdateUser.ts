@@ -21,7 +21,7 @@ export default class UpdateUser {
 
     private async findUser(userId: string): Promise<User> {
         const user = await this.repository.getById(userId)
-        if (!user.isEmpty()) throw new ResourceNotFound(`User with id: ${userId}`)
+        if (user.isEmpty()) throw new ResourceNotFound(`User with id: ${userId}`)
 
         return user.get()!
     }

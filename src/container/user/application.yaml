@@ -7,9 +7,13 @@ services:
     class: ../../api/controller/user/UpdateUserPostController
     arguments: ['@User.UpdateUser']
 
+  User.Find:
+    class:  ../../modules/user/application/FindUser
+    arguments: ['@User.Repository']
+
   User.Save:
     class: ../../modules/user/application/SaveUser
-    arguments: ['@User.Repository']
+    arguments: ['@User.Repository', '@Shared.Helpers.Bcrypt']
 
   User.UpdateUser:
     class: ../../modules/user/application/UpdateUser

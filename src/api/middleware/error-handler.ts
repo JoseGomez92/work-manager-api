@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express'
 import httpStatus from 'http-status'
+import AuthenticationError from '../../modules/shared/domain/error/AuthenticationError'
 import CriteriaError from '../../modules/shared/domain/error/CriteriaError'
 import InvalidValueError from '../../modules/shared/domain/error/InvalidValueError'
 import ResourceAlreadyExists from '../../modules/shared/domain/error/ResourceAlreadyExists'
@@ -21,6 +22,9 @@ export const errorHandler = (app: express.Application) => {
                 break
             case err.name === CriteriaError.name:
                 res.status(httpStatus.BAD_REQUEST).send({ error: err.message })
+                break
+            case err.name === AuthenticationError.name:
+                res.status(httpStatus.UNAUTHORIZED).send({ error: err.message })
                 break
             default:
                 res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ error: 'An error has ocurred' })
