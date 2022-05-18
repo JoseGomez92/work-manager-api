@@ -48,7 +48,7 @@ export default class Criteria {
         return this
     }
 
-    or(condition: Or): Criteria {
+    or(condition: CriteriaOperator): Criteria {
         if (!this._conditions.length) throw new CriteriaError('Where condition is required before Or')
         this._conditions.push(new Or(condition))
 
