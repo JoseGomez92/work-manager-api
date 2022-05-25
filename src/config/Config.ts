@@ -7,7 +7,7 @@ export type ConfigType = {
     }
     security: {
         secretKey: string
-        expirationTime: number // in hours
+        hoursExpiration: number // in hours
     }
 }
 
@@ -33,7 +33,7 @@ export default class Config {
     private guardEnviromentVars() {
         if (!process.env.SERVER_PORT) throw new Error('SERVER_PORT is not defined')
         if (!process.env.SECRET_KEY) throw new Error('SECRET_KEY is not defined')
-        if (!process.env.TOKEN_EXPIRATION_TIME) throw new Error('TOKEN_EXPIRATION_TIME is not defined')
+        if (!process.env.TOKEN_HOURS_EXPIRATION) throw new Error('TOKEN_HOURS_EXPIRATION is not defined')
     }
 
     private loadParameters() {
@@ -43,7 +43,7 @@ export default class Config {
             },
             security: {
                 secretKey: process.env.SECRET_KEY!,
-                expirationTime: Number(process.env.TOKEN_EXPIRATION_TIME),
+                hoursExpiration: Number(process.env.TOKEN_HOURS_EXPIRATION),
             },
         }
     }
