@@ -1,7 +1,7 @@
 services:
   User.SaveUserPutController:
     class: ../../api/controller/user/SaveUserPutController
-    arguments: ['@User.Save']
+    arguments: ['@Shared.CommandBus']
 
   User.UpdateUserPostController:
     class: ../../api/controller/user/UpdateUserPostController
@@ -12,8 +12,14 @@ services:
     arguments: ['@User.Repository']
 
   User.Save:
-    class: ../../modules/user/application/SaveUser
+    class: ../../modules/user/application/save/SaveUser
     arguments: ['@User.Repository', '@Shared.Helpers.Bcrypt']
+
+  User.SaveCommandHandler:
+    class: ../../modules/user/application/save/SaveUserCommandHandler
+    arguments: ['@User.Save']
+    tags:
+      - { name: 'commandHandler' }
 
   User.UpdateUser:
     class: ../../modules/user/application/UpdateUser

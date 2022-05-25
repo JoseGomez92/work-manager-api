@@ -2,6 +2,22 @@ services:
   Shared.Config:
     class: ../../config/Config
     arguments: []
+  
+  Shared.CommandBus:
+    class: ../../modules/shared/infraestructure/cqrs/InMemory/InMemoryCommandBus
+    arguments: ['@Shared.CommandBusInformation']
+
+  Shared.CommandBusInformation:
+    class: ../../modules/shared/infraestructure/cqrs/InMemory/CommandHandlersInformation
+    arguments: ['!tagged commandHandler']
+
+  Shared.QueryBus:
+    class: ../../modules/shared/infraestructure/cqrs/InMemory/InMemoryQueryBus
+    arguments: ['@Shared.QueryBusInformation']
+
+  Shared.QueryBusInformation:
+    class: ../../modules/shared/infraestructure/cqrs/InMemory/QueryHandlersInformation
+    arguments: ['!tagged queryHandler']
 
   Shared.Helpers.Bcrypt:
     class: ../../modules/shared/domain/helpers/Bcrypt

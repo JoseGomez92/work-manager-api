@@ -1,9 +1,9 @@
-import Criteria from '../../shared/domain/criteria/Criteria'
-import Comparation, { ComparatorValue } from '../../shared/domain/criteria/operators/Comparation'
-import ResourceAlreadyExists from '../../shared/domain/error/ResourceAlreadyExists'
-import Bcrypt from '../../shared/domain/helpers/Bcrypt'
-import User, { UserType } from '../domain/User'
-import UserRepository from '../domain/UserRepository'
+import Criteria from '../../../shared/domain/criteria/Criteria'
+import Comparation, { ComparatorValue } from '../../../shared/domain/criteria/operators/Comparation'
+import ResourceAlreadyExists from '../../../shared/domain/error/ResourceAlreadyExists'
+import Bcrypt from '../../../shared/domain/helpers/Bcrypt'
+import User, { UserType } from '../../domain/User'
+import UserRepository from '../../domain/UserRepository'
 
 export default class SaveUser {
     constructor(private repository: UserRepository, private bcrypt: Bcrypt) {}
