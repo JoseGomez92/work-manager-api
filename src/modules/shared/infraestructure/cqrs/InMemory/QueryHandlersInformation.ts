@@ -11,7 +11,7 @@ export default class QueryHandlersInformation {
     }
 
     search(query: Query): QueryHandler<Query, Response> {
-        const handler = this.handlersMap.get(query)
+        const handler = this.handlersMap.get(query.constructor)
         if (!handler) {
             throw new Error(`No Query Handler found for query <${query.constructor.name}>`)
         }
