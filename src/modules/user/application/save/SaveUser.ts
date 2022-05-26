@@ -22,7 +22,7 @@ export default class SaveUser {
     }
 
     private async guardUserByEmail(email: string): Promise<void> {
-        const criteria = new Criteria().where(new Comparation('emails', ComparatorValue.EQUAL, email))
+        const criteria = new Criteria().where(new Comparation('email', ComparatorValue.EQUAL, email))
         const users = await this.repository.getByCriteria(criteria)
         if (!users.isEmpty()) throw new ResourceAlreadyExists(`User with email ${email} already exists`)
     }

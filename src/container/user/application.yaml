@@ -5,7 +5,7 @@ services:
 
   User.UpdateUserPostController:
     class: ../../api/controller/user/UpdateUserPostController
-    arguments: ['@User.UpdateUser']
+    arguments: ['@Shared.CommandBus']
 
   User.Find:
     class:  ../../modules/user/application/FindUser
@@ -22,8 +22,14 @@ services:
       - { name: 'commandHandler' }
 
   User.UpdateUser:
-    class: ../../modules/user/application/UpdateUser
+    class: ../../modules/user/application/update/UpdateUser
     arguments: ['@User.Repository']
+
+  User.UpdateUserCommandHandler:
+    class: ../../modules/user/application/update/UpdateUserCommandHandler
+    arguments: ['@User.UpdateUser']
+    tags: 
+      - { name: 'commandHandler' }
 
   User.Repository:
     class: ../../modules/user/infraestructure/InMemoryRepository/InMemoryUserRepository

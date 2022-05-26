@@ -1,15 +1,16 @@
 import { Request, Response } from 'express'
 import httpStatus from 'http-status'
-import UpdateUser from '../../../modules/user/application/UpdateUser'
+import CommandBus from '../../../modules/shared/domain/cqrs/CommandBus'
+import UpdateUserCommand from '../../../modules/user/application/update/UpdateUserCommand'
 import Controller from '../Controller'
 
 export default class UpdateUserPostController extends Controller {
-    constructor(private updateUser: UpdateUser) {
+    constructor(private commandBus: CommandBus) {
         super()
     }
 
     protected async run(request: Request, response: Response): Promise<Response> {
-        await this.updateUser.run(request.params.id, request.body)
+        await this.commandBus.dispatch(new UpdateUserCommand({ id: request.params.id, ...request.body }))
         return response.status(httpStatus.OK).send()
     }
 }

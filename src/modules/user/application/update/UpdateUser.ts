@@ -1,8 +1,9 @@
-import ResourceNotFound from '../../shared/domain/error/ResourceNotFound'
-import User from '../domain/User'
-import UserRepository from '../domain/UserRepository'
+import ResourceNotFound from '../../../shared/domain/error/ResourceNotFound'
+import User from '../../domain/User'
+import UserRepository from '../../domain/UserRepository'
 
 export type UserUpdateType = {
+    id: string
     name: string
     surnames: string
     email: string
@@ -13,8 +14,9 @@ export type UserUpdateType = {
 export default class UpdateUser {
     constructor(private repository: UserRepository) {}
 
-    async run(userId: string, rawUser: UserUpdateType): Promise<void> {
-        const user = await this.findUser(userId)
+    async run(rawUser: UserUpdateType): Promise<void> {
+        const user = await this.findUser(rawUser.id)
+        // TODO: Check unique email
         this.setProperties(user, rawUser)
         this.repository.update(user)
     }
