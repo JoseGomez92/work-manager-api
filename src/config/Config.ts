@@ -1,5 +1,5 @@
 import fs from 'fs'
-import _ from 'lodash'
+import cloneDeep from 'lodash'
 
 export type ConfigType = {
     server: {
@@ -15,7 +15,7 @@ export default class Config {
     private _parameters!: ConfigType
 
     get(): ConfigType {
-        return _.cloneDeep(this._parameters)
+        return cloneDeep(this._parameters).value()
     }
 
     constructor() {
@@ -33,7 +33,7 @@ export default class Config {
     private guardEnviromentVars() {
         if (!process.env.SERVER_PORT) throw new Error('SERVER_PORT is not defined')
         if (!process.env.SECRET_KEY) throw new Error('SECRET_KEY is not defined')
-        if (!process.env.TOKEN_HOURS_EXPIRATION) throw new Error('TOKEN_HOURS_EXPIRATION is not defined')
+        if (!process.env.TOKEN_DURATION_HOURS) throw new Error('TOKEN_DURATION_HOURS is not defined')
     }
 
     private loadParameters() {
@@ -43,7 +43,7 @@ export default class Config {
             },
             security: {
                 secretKey: process.env.SECRET_KEY!,
-                hoursExpiration: Number(process.env.TOKEN_HOURS_EXPIRATION),
+                hoursExpiration: Number(process.env.TOKEN_DURATION_HOURS),
             },
         }
     }
