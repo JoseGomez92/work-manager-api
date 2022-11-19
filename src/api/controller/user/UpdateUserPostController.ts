@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import httpStatus from 'http-status'
-import CommandBus from '../../../modules/shared/domain/cqrs/CommandBus'
-import UpdateUserCommand from '../../../modules/user/application/update/UpdateUserCommand'
+import CommandBus from '../../../modules/Shared/domain/cqrs/CommandBus'
+import UpdateUserCommand from '../../../modules/User/application/update/UpdateUserCommand'
 import Controller from '../Controller'
 
 export default class UpdateUserPostController extends Controller {

@@ -1,0 +1,43 @@
+import ResourceNotFound from '../../../Shared/domain/error/ResourceNotFound'
+import User from '../../domain/User'
+import UserRepository from '../../domain/UserRepository'
+
+export type UserUpdateType = {
+    id: string
+    name: string
+    surnames: string
+    email: string
+    phone: string
+    address: string
+}
+
+export default class UpdateUser {
+    constructor(private repository: UserRepository) {}
+
+    async run(rawUser: UserUpdateType): Promise<void> {
+        const user = await this.findUser(rawUser.id)
+        this.guardEmail(user, rawUser)
+        this.setProperties(user, rawUser)
+        this.repository.update(user)
+    }
+
+    private async findUser(userId: string): Promise<User> {
+        const user = await this.repository.getById(userId)
+        if (user.isEmpty()) throw new ResourceNotFound(`User with id: ${userId}`)
+
+        return user.get()!
+    }
+
+    private guardEmail(user: User, rawUser: UserUpdateType): void {
+        // TODO: Change the error type (create a new one?)
+        if (user.email === rawUser.email && user.id !== rawUser.id) throw new Error('There is an user with the same email.')
+    }
+
+    private setProperties(user: User, rawUser: UserUpdateType): void {
+        user.name = rawUser.name
+        user.surnames = rawUser.surnames
+        user.email = rawUser.email
+        user.phone = rawUser.phone
+        user.address = rawUser.address
+    }
+}

@@ -8,29 +8,29 @@ services:
     arguments: ['@Shared.CommandBus']
 
   User.Find:
-    class:  ../../modules/user/application/FindUser
+    class:  ../../modules/User/application/FindUser
     arguments: ['@User.Repository']
 
   User.Save:
-    class: ../../modules/user/application/save/SaveUser
+    class: ../../modules/User/application/save/SaveUser
     arguments: ['@User.Repository', '@Shared.Helpers.Bcrypt']
 
   User.SaveCommandHandler:
-    class: ../../modules/user/application/save/SaveUserCommandHandler
+    class: ../../modules/User/application/save/SaveUserCommandHandler
     arguments: ['@User.Save']
     tags:
       - { name: 'commandHandler' }
 
   User.UpdateUser:
-    class: ../../modules/user/application/update/UpdateUser
+    class: ../../modules/User/application/update/UpdateUser
     arguments: ['@User.Repository']
 
   User.UpdateUserCommandHandler:
-    class: ../../modules/user/application/update/UpdateUserCommandHandler
+    class: ../../modules/User/application/update/UpdateUserCommandHandler
     arguments: ['@User.UpdateUser']
     tags: 
       - { name: 'commandHandler' }
 
   User.Repository:
-    class: ../../modules/user/infraestructure/TypeOrmRepository/TypeOrmUserRepository
+    class: ../../modules/User/infraestructure/type-orm-repository/TypeOrmUserRepository
     arguments: ['@Shared.TypeORM']

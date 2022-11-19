@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import httpStatus from 'http-status'
-import CommandBus from '../../../modules/shared/domain/cqrs/CommandBus'
-import SaveUserCommand from '../../../modules/user/application/save/SaveUserCommand'
+import CommandBus from '../../../modules/Shared/domain/cqrs/CommandBus'
+import SaveUserCommand from '../../../modules/User/application/save/SaveUserCommand'
 import Controller from '../Controller'
 
 export default class SaveUserPutController extends Controller {

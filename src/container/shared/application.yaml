@@ -4,29 +4,29 @@ services:
     arguments: []
   
   Shared.CommandBus:
-    class: ../../modules/shared/infraestructure/cqrs/InMemory/InMemoryCommandBus
+    class: ../../modules/Shared/infraestructure/cqrs/in-memory/InMemoryCommandBus
     arguments: ['@Shared.CommandBusInformation']
 
   Shared.CommandBusInformation:
-    class: ../../modules/shared/infraestructure/cqrs/InMemory/CommandHandlersInformation
+    class: ../../modules/Shared/infraestructure/cqrs/in-memory/CommandHandlersInformation
     arguments: ['!tagged commandHandler']
 
   Shared.QueryBus:
-    class: ../../modules/shared/infraestructure/cqrs/InMemory/InMemoryQueryBus
+    class: ../../modules/Shared/infraestructure/cqrs/in-memory/InMemoryQueryBus
     arguments: ['@Shared.QueryBusInformation']
 
   Shared.QueryBusInformation:
-    class: ../../modules/shared/infraestructure/cqrs/InMemory/QueryHandlersInformation
+    class: ../../modules/Shared/infraestructure/cqrs/in-memory/QueryHandlersInformation
     arguments: ['!tagged queryHandler']
 
   Shared.TypeORM:
-    class: ../../modules/shared/infraestructure/TypeORM/TypeORM
+    class: ../../modules/Shared/infraestructure/type-orm/TypeORM
     arguments: ['@Shared.Config']
 
   Shared.Helpers.Bcrypt:
-    class: ../../modules/shared/domain/helpers/Bcrypt
+    class: ../../modules/Shared/domain/helpers/Bcrypt
     arguments: []
 
   Shared.Helpers.Jwt:
-    class: ../../modules/shared/domain/helpers/JWT
+    class: ../../modules/Shared/domain/helpers/JWT
     arguments: ['@Shared.Config']
