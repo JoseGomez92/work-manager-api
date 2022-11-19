@@ -32,5 +32,5 @@ services:
       - { name: 'commandHandler' }
 
   User.Repository:
-    class: ../../modules/user/infraestructure/InMemoryRepository/InMemoryUserRepository
-    arguments: []
+    class: ../../modules/user/infraestructure/TypeOrmRepository/TypeOrmUserRepository
+    arguments: ['@Shared.TypeORM']

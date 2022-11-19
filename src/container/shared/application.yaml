@@ -19,6 +19,10 @@ services:
     class: ../../modules/shared/infraestructure/cqrs/InMemory/QueryHandlersInformation
     arguments: ['!tagged queryHandler']
 
+  Shared.TypeORM:
+    class: ../../modules/shared/infraestructure/TypeORM/TypeORM
+    arguments: ['@Shared.Config']
+
   Shared.Helpers.Bcrypt:
     class: ../../modules/shared/domain/helpers/Bcrypt
     arguments: []

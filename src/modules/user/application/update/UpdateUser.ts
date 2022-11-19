@@ -16,7 +16,7 @@ export default class UpdateUser {
 
     async run(rawUser: UserUpdateType): Promise<void> {
         const user = await this.findUser(rawUser.id)
-        // TODO: Check unique email
+        this.guardEmail(user, rawUser)
         this.setProperties(user, rawUser)
         this.repository.update(user)
     }
@@ -26,6 +26,11 @@ export default class UpdateUser {
         if (user.isEmpty()) throw new ResourceNotFound(`User with id: ${userId}`)
 
         return user.get()!
+    }
+
+    private guardEmail(user: User, rawUser: UserUpdateType): void {
+        // TODO: Change the error type (create a new one?)
+        if (user.email === rawUser.email && user.id !== rawUser.id) throw new Error('There is an user with the same email.')
     }
 
     private setProperties(user: User, rawUser: UserUpdateType): void {

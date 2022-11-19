@@ -1,8 +1,12 @@
 export default class Optional<T> {
-    constructor(private readonly value: T | null | undefined) {}
+    private readonly value: T | null
 
-    get(): T | null {
-        return this.value ? this.value : null
+    constructor(value: T | null | undefined) {
+        this.value = value ? value : null
+    }
+
+    get(): Optional<T>['value'] {
+        return this.value
     }
 
     isEmpty(): boolean {

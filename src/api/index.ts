@@ -4,17 +4,24 @@ import { mountRoutes } from './routes'
 import Config from '../config/Config'
 import { errorHandler } from './middleware/error-handler'
 
-const config: Config = container.get('Shared.Config')
+async function start() {
+    const config: Config = container.get('Shared.Config')
 
-const app: express.Application = express()
+    const app: express.Application = express()
 
-// Middlewares
-app.use(express.json())
+    // Init TypeORM
+    await container.get('Shared.TypeORM').init()
 
-// Mount routes
-mountRoutes(app)
+    // Middlewares
+    app.use(express.json())
 
-// Set error handler
-errorHandler(app)
+    // Mount routes
+    mountRoutes(app)
 
-app.listen(config.get().server.port, () => console.log(`API listening on port: ${config.get().server.port}`))
+    // Set error handler
+    errorHandler(app)
+
+    app.listen(config.get().server.port, () => console.log(`API listening on port: ${config.get().server.port}`))
+}
+
+start()
