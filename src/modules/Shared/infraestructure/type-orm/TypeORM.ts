@@ -1,4 +1,4 @@
-import { DataSource, EntityTarget, ObjectLiteral } from 'typeorm'
+import { DataSource, EntityTarget, ObjectLiteral, Repository, SelectQueryBuilder } from 'typeorm'
 import Config from '../../../../config/Config'
 import InternalError from '../../domain/error/InternalError'
 import 'reflect-metadata' // Mandatory to use TypeORM
@@ -28,7 +28,11 @@ export default class TypeORM {
         }
     }
 
-    getRepository<T extends ObjectLiteral>(entity: EntityTarget<T>) {
+    getRepository<T extends ObjectLiteral>(entity: EntityTarget<T>): Repository<T> {
         return this.dataSource.getRepository(entity)
+    }
+
+    getQueryBuilder<T extends ObjectLiteral>(entity: EntityTarget<T>, alias: string): SelectQueryBuilder<T> {
+        return this.getRepository(entity).createQueryBuilder(alias)
     }
 }

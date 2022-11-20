@@ -9,25 +9,21 @@ export default class SaveUser {
     constructor(private repository: UserRepository, private bcrypt: Bcrypt) {}
 
     async run(rawUser: UserType): Promise<void> {
-        await this.guardUserById(rawUser.id)
-        await this.guardUserByEmail(rawUser.email)
         const user = User.create(rawUser)
-        user.password = await this.encryptPassword(user.password)
+        await this.guardUsersByIdAndEmail(user)
+        await this.encryptPassword(user)
         await this.repository.save(user)
     }
 
-    private async guardUserById(id: string): Promise<void> {
-        const optionalUser = await this.repository.getById(id)
-        if (!optionalUser.isEmpty()) throw new ResourceAlreadyExists(`User with id ${id} already exists`)
-    }
-
-    private async guardUserByEmail(email: string): Promise<void> {
-        const criteria = new Criteria().where(new Comparation('email', ComparatorValue.EQUAL, email))
+    private async guardUsersByIdAndEmail(user: User): Promise<void> {
+        const criteria = new Criteria()
+            .where(new Comparation('id', ComparatorValue.EQUAL, user.id))
+            .or(new Comparation('email', ComparatorValue.EQUAL, user.email))
         const users = await this.repository.getByCriteria(criteria)
-        if (!users.isEmpty()) throw new ResourceAlreadyExists(`User with email ${email} already exists`)
+        if (!users.isEmpty()) throw new ResourceAlreadyExists(`User with the id ${user.id} or email ${user.email} already exists`)
     }
 
-    private encryptPassword(password: string): Promise<string> {
-        return this.bcrypt.generateHash(password)
+    private async encryptPassword(user: User): Promise<void> {
+        user.password = await this.bcrypt.generateHash(user.password)
     }
 }
