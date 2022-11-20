@@ -1,3 +1,6 @@
+import Criteria from '../../../Shared/domain/criteria/Criteria'
+import Comparation, { ComparatorValue } from '../../../Shared/domain/criteria/operators/Comparation'
+import ResourceAlreadyExists from '../../../Shared/domain/error/ResourceAlreadyExists'
 import ResourceNotFound from '../../../Shared/domain/error/ResourceNotFound'
 import User from '../../domain/User'
 import UserRepository from '../../domain/UserRepository'
@@ -16,7 +19,7 @@ export default class UpdateUser {
 
     async run(rawUser: UserUpdateType): Promise<void> {
         const user = await this.findUser(rawUser.id)
-        this.guardEmail(user, rawUser)
+        await this.guardEmail(rawUser)
         this.setProperties(user, rawUser)
         this.repository.update(user)
     }
@@ -28,9 +31,11 @@ export default class UpdateUser {
         return user.get()!
     }
 
-    private guardEmail(user: User, rawUser: UserUpdateType): void {
-        // TODO: Change the error type (create a new one?)
-        if (user.email === rawUser.email && user.id !== rawUser.id) throw new Error('There is an user with the same email.')
+    private async guardEmail(rawUser: UserUpdateType): Promise<void> {
+        const criteria = new Criteria().where(new Comparation('email', ComparatorValue.EQUAL, rawUser.email))
+        const users = await this.repository.getByCriteria(criteria)
+        if (users.first.get() && users.first.get()!.id !== rawUser.id)
+            throw new ResourceAlreadyExists(`User with the email ${rawUser.email} already exists`)
     }
 
     private setProperties(user: User, rawUser: UserUpdateType): void {

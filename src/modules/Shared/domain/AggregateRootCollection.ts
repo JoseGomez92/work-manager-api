@@ -7,7 +7,7 @@ export default abstract class AggregateRootCollection<T> {
         return this.values
     }
 
-    first(): Optional<T> {
+    get first(): Optional<T> {
         return new Optional(this.values[0])
     }
 

@@ -35,6 +35,6 @@ export default class TypeOrmUserRepository implements UserRepository {
     }
 
     async update(user: User): Promise<void> {
-        await this.repository.update(user.id, user)
+        await this.repository.update(user.id, user.toPrimitives())
     }
 }
