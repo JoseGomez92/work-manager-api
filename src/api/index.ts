@@ -1,5 +1,6 @@
 import container from '../container'
 import express from 'express'
+import cors from 'cors'
 import { mountRoutes } from './routes'
 import Config from '../config/Config'
 import { errorHandler } from './middleware/error-handler'
@@ -14,6 +15,7 @@ async function start() {
 
     // Middlewares
     app.use(express.json())
+    app.use(cors())
 
     // Mount routes
     mountRoutes(app)
