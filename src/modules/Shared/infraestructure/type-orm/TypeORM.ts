@@ -1,9 +1,12 @@
 import { DataSource, EntityTarget, ObjectLiteral, Repository, SelectQueryBuilder } from 'typeorm'
 import Config from '../../../../config/Config'
 import InternalError from '../../domain/error/InternalError'
+import Environment, { EnviromentType } from '../decorators/Environment.decorator'
 import 'reflect-metadata' // Mandatory to use TypeORM
 
 export default class TypeORM {
+    @Environment()
+    private environment!: EnviromentType
     private dataSource: DataSource
 
     constructor(config: Config) {
@@ -15,8 +18,8 @@ export default class TypeORM {
             username: mysql.username,
             password: mysql.password,
             database: mysql.database,
-            entities: [`${process.cwd()}/**/*.entity.ts`],
-            synchronize: process.env.NODE_ENV === 'development',
+            entities: [`${process.cwd()}/${this.environment.isProduction ? 'dist' : 'src'}/**/*.entity.{js,ts}`],
+            synchronize: !this.environment.isProduction,
         })
     }
 
