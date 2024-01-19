@@ -1,0 +1,36 @@
+services:
+  Client.SaveClientPutController:
+    class: ../../api/controller/client/SaveClientPutController
+    arguments: ['@Shared.CommandBus']
+
+  Client.UpdateClientPostController:
+    class: ../../api/controller/client/UpdateClientPostController
+    arguments: ['@Shared.CommandBus']
+
+  Client.Find:
+    class:  ../../modules/client/application/FindClient
+    arguments: ['@Client.Repository']
+
+  Client.Save:
+    class: ../../modules/client/application/save/SaveClient
+    arguments: ['@Client.Repository', '@Shared.Helpers.Bcrypt']
+
+  Client.SaveCommandHandler:
+    class: ../../modules/client/application/save/SaveClientCommandHandler
+    arguments: ['@Client.Save']
+    tags:
+      - { name: 'commandHandler' }
+
+  Client.UpdateClient:
+    class: ../../modules/client/application/update/UpdateClient
+    arguments: ['@Client.Repository']
+
+  Client.UpdateClientCommandHandler:
+    class: ../../modules/client/application/update/UpdateClientCommandHandler
+    arguments: ['@Client.UpdateClient']
+    tags: 
+      - { name: 'commandHandler' }
+
+  Client.Repository:
+    class: ../../modules/client/infraestructure/type-orm-repository/TypeOrmUserRepository
+    arguments: ['@Shared.TypeORM']
