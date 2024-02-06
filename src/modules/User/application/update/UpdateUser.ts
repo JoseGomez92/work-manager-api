@@ -21,7 +21,7 @@ export default class UpdateUser {
         const user = await this.findUser(rawUser.id)
         await this.guardEmail(rawUser)
         this.setProperties(user, rawUser)
-        this.repository.update(user)
+        await this.repository.update(user)
     }
 
     private async findUser(userId: string): Promise<User> {
