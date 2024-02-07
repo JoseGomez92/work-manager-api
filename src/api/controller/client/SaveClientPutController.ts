@@ -5,7 +5,7 @@ import CommandBus from '../../../modules/Shared/domain/cqrs/CommandBus'
 import Controller from '../Controller'
 
 export default class SaveClientPutController extends Controller {
-    constructor(private commandBus: CommandBus) {
+    constructor(private readonly commandBus: CommandBus) {
         super()
     }
 
