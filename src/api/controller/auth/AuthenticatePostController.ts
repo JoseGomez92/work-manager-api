@@ -13,9 +13,9 @@ import User from '../../../modules/User/domain/User'
 import Controller from '../Controller'
 
 export default class AuthenticatePostController extends Controller {
-    private finder: FindUser
-    private bcrypt: Bcrypt
-    private jwt: JWT
+    private readonly finder: FindUser
+    private readonly bcrypt: Bcrypt
+    private readonly jwt: JWT
 
     constructor() {
         super()

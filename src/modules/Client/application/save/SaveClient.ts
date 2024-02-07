@@ -2,7 +2,7 @@ import Client, { ClientType } from '../../domain/Client'
 import ClientRepository from '../../domain/ClientRepository'
 
 export default class SaveClient {
-    constructor(private repository: ClientRepository) {}
+    constructor(private readonly repository: ClientRepository) {}
 
     async run(rawClient: ClientType): Promise<void> {
         const client = Client.create(rawClient)

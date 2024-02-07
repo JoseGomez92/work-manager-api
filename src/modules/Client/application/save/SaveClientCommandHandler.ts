@@ -4,7 +4,7 @@ import SaveClient from './SaveClient'
 import SaveClientCommand from './SaveClientCommand'
 
 export default class SaveClientCommandHandler implements CommandHandler {
-    constructor(private saveClient: SaveClient) {}
+    constructor(private readonly saveClient: SaveClient) {}
 
     subscribedTo(): Command {
         return SaveClientCommandHandler
